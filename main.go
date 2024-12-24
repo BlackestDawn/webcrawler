@@ -16,13 +16,14 @@ func main() {
 	}
 
 	baseUrl := os.Args[1]
+
 	fmt.Println("starting crawl of:", baseUrl)
 
-	htmlBody, err := getHTML(baseUrl)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	traversedPages := make(map[string]int)
+	crawlPage(baseUrl, baseUrl, traversedPages)
 
-	fmt.Println(htmlBody)
+	fmt.Println("finished crawling, page hit results:")
+	for key, val := range traversedPages {
+		fmt.Printf("page %s was hit %d time.\n", key, val)
+	}
 }
